@@ -54,7 +54,7 @@ jdbc:
   # Mysql 数据库配置
   type: mysql
   driver: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://127.0.0.1:3306/jeesite_v5?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+  url: jdbc:mysql://127.0.0.1:3306/jeesite?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
   username: root
   password: 123456
   testSql: SELECT 1
@@ -875,14 +875,14 @@ file:
 
 # 视频转码
 #video:
-#  
+#
 #  # 视频格式转换  ffmpeg.exe 所放的路径
 #  ffmpegFile: d:/tools/video/ffmpeg-4.9/bin/ffmpeg.exe
 #  #ffmpegFile: d:/tools/video/libav-10.6-win64/bin/avconv.exe
-#  
+#
 #  # 视频格式转换  mencoder.exe 所放的路径
 #  mencoderFile: d:/tools/video/mencoder-4.9/mencoder.exe
-#  
+#
 #  # 将mp4视频的元数据信息转到视频第一帧
 #  qtFaststartFile: d:/tools/video/qt-faststart/qt-faststart.exe
 
@@ -909,10 +909,10 @@ msg:
 #      corePoolSize: 5
 #      maxPoolSize: 20
 #      keepAliveSeconds: 60
-#  
+#
 #  # 推送失败次数，如果推送次数超过了设定次数，仍不成功，则放弃并保存到历史
 #  pushFailNumber: 3
-#  
+#
 #  # 邮件发送参数
 #  email:
 #    beanName: emailSendService
@@ -921,7 +921,7 @@ msg:
 #    fromHostName: smtp.163.com
 #    sslOnConnect: false
 #    sslSmtpPort: 994
-#  
+#
 #  # 短信网关
 #  sms:
 #    beanName: smsSendService
