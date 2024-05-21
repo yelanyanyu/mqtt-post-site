@@ -21,7 +21,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class ApiApplication extends SpringBootServletInitializer {
 
 	private static Logger logger = LoggerFactory.getLogger(ApiApplication.class);
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(ApiApplication.class, args);
 		logger.info(
@@ -32,11 +32,11 @@ public class ApiApplication extends SpringBootServletInitializer {
 				+ "\r\n\r\n   默认管理账号： system   密码： admin"
 				+ "\r\n\r\n==============================================================\r\n");
 	}
-	
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		this.setRegisterErrorPageFilter(false); // 错误页面有容器来处理，而不是SpringBoot
 		return builder.sources(ApiApplication.class);
 	}
-	
+
 }

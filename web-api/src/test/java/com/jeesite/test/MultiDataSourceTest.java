@@ -33,10 +33,10 @@ import com.jeesite.modules.test.service.TestDataService;
 @ActiveProfiles("test")
 @SpringBootTest(classes = ApiApplication.class)
 public class MultiDataSourceTest extends BaseSpringContextTests {
-	
+
 	@Autowired
 	private TestDataService testDataService;
-	
+
 	@Test
 	public void testData() throws Exception{
 		ExecutorService pool = Executors.newCachedThreadPool();
@@ -68,5 +68,5 @@ public class MultiDataSourceTest extends BaseSpringContextTests {
 		latch.await();
 		pool.shutdown();
 	}
-	
+
 }

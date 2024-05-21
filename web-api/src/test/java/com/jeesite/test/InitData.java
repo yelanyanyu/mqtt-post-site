@@ -19,7 +19,7 @@ import com.jeesite.modules.ApiApplication;
 @ActiveProfiles("test")
 @SpringBootTest(classes = ApiApplication.class)
 public class InitData extends BaseInitDataTests {
-	
+
 	@Test
 	public void initData01() throws Exception{
 		logger.info("数据库初始化完成。");
@@ -29,5 +29,5 @@ public class InitData extends BaseInitDataTests {
 	public void initProperty() {
 		System.setProperty("jeesite.initdata", "true");
 	}
-	
+
 }

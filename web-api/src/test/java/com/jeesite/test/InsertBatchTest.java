@@ -24,10 +24,10 @@ import java.util.List;
 @ActiveProfiles("test")
 @SpringBootTest(classes = ApiApplication.class)
 public class InsertBatchTest extends BaseSpringContextTests {
-	
+
 	@Autowired
 	private TestDataDao testDataDao;
-	
+
 	@Test
 	public void testData() throws Exception{
 		List<TestData> list = ListUtils.newArrayList();
@@ -42,5 +42,5 @@ public class InsertBatchTest extends BaseSpringContextTests {
 		long count = testDataDao.updateBatch(list, null);
 		System.out.println("update: " + count);
 	}
-	
+
 }
