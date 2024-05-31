@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.Device;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.service.DeviceService;
+import com.jeesite.modules.yelanyanyu.device_detecter.vo.LEDVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -230,4 +231,19 @@ public class DeviceController extends BaseController {
 		return renderResult(Global.TRUE, "数据修复成功");
 	}
 
+	@RequiresPermissions("device:device:view")
+	@RequestMapping(value = "openLight")
+	@ResponseBody
+	public String openLightForLED(LEDVO ledvo) {
+		logger.info("command: {}", ledvo);
+		return renderResult(Global.TRUE, "成功");
+	}
+
+	@RequiresPermissions("device:device:view")
+	@RequestMapping(value = "closeLight")
+	@ResponseBody
+	public String closeLightForLED(LEDVO ledvo) {
+		logger.info("command: {}", ledvo);
+		return renderResult(Global.TRUE, "成功");
+	}
 }
