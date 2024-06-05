@@ -1,14 +1,11 @@
 package com.jeesite.modules.yelanyanyu.device_detecter.mqtt.impl;
 
+import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.modules.yelanyanyu.device_detecter.mqtt.MqttService;
-import com.jeesite.modules.yelanyanyu.device_detecter.vo.LEDVO;
 import lombok.extern.slf4j.Slf4j;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author yelanyanyu@zjxu.edu.cn
@@ -16,9 +13,14 @@ import javax.annotation.Resource;
  */
 @Service
 @Slf4j
-public class MqttServiceImpl implements MqttService {
-    @Resource
-    private MqttClient mqttClient;
+public class MqttServiceImpl implements MqttService, MqttCallback {
+    private final MqttClient mqttClient;
+
+    @Autowired
+    public MqttServiceImpl(MqttClient mqttClient) {
+        this.mqttClient = mqttClient;
+        this.mqttClient.setCallback(this);
+    }
 
     @Override
     public boolean sendMessage(String topic, String message) {
@@ -30,5 +32,41 @@ public class MqttServiceImpl implements MqttService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean subscribeTopic(String topic) {
+        try {
+            mqttClient.subscribe(topic);
+            return true;
+        } catch (MqttException e) {
+            log.error("error: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public void connectionLost(Throwable throwable) {
+        log.error("mqtt disconnected, try to reconnect...: {}", throwable.getMessage());
+        try {
+            mqttClient.reconnect();
+            log.info("reconnect successfully!");
+        } catch (MqttException e) {
+            log.error("reconnect failed with error: {}", e.getMessage());
+        }
+    }
+
+    @Override
+    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
+        log.info("topic: {}", s);
+        String payload = new String(mqttMessage.getPayload());
+        log.info("payload: {}", payload);
+        String json = JsonMapper.toJson(payload);
+        log.info("payload-json: {}", json);
+    }
+
+    @Override
+    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
+
     }
 }

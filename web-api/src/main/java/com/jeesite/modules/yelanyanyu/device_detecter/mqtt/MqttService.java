@@ -8,4 +8,6 @@ import com.jeesite.modules.yelanyanyu.device_detecter.vo.LEDVO;
  */
 public interface MqttService {
     public boolean sendMessage(String topic, String message);
+
+    public boolean subscribeTopic(String topic);
 }

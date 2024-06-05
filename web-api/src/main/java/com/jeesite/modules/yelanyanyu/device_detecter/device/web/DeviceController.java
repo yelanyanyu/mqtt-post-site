@@ -1,8 +1,11 @@
 package com.jeesite.modules.yelanyanyu.device_detecter.device.web;
 
-import java.util.Map;
-import java.util.List;
-
+import com.jeesite.common.collect.ListUtils;
+import com.jeesite.common.collect.MapUtils;
+import com.jeesite.common.config.Global;
+import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.web.BaseController;
+import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.Device;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.service.DeviceService;
 import com.jeesite.modules.yelanyanyu.device_detecter.mqtt.MqttService;
@@ -17,12 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jeesite.common.config.Global;
-import com.jeesite.common.collect.ListUtils;
-import com.jeesite.common.collect.MapUtils;
-import com.jeesite.common.lang.StringUtils;
-import com.jeesite.modules.sys.utils.UserUtils;
-import com.jeesite.common.web.BaseController;
+import java.util.List;
+import java.util.Map;
 
 /**
  * device : 存储设备层次的根表Controller
@@ -256,5 +255,17 @@ public class DeviceController extends BaseController {
             return renderResult(Global.TRUE, "成功");
         }
         return renderResult(Global.FALSE, "失败");
+    }
+
+
+    @RequiresPermissions("device:device:edit")
+    @RequestMapping(value = "subscribeTopic")
+    @ResponseBody
+    public String subscribeTopic(String topic) {
+        logger.info("topic subscribe: {}", topic);
+        if (mqttService.subscribeTopic(topic)) {
+            return renderResult(Global.TRUE, "success");
+        }
+        return renderResult(Global.FALSE, "failed");
     }
 }
