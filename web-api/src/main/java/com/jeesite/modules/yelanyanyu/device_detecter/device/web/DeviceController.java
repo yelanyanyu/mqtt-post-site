@@ -7,7 +7,9 @@ import com.jeesite.common.lang.StringUtils;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.Device;
+import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.LedData;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.service.DeviceService;
+import com.jeesite.modules.yelanyanyu.device_detecter.message.MqttMessageQueue;
 import com.jeesite.modules.yelanyanyu.device_detecter.mqtt.MqttService;
 import com.jeesite.modules.yelanyanyu.device_detecter.vo.LEDVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -32,6 +34,8 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "${adminPath}/device/device")
 public class DeviceController extends BaseController {
+    @Autowired
+    private MqttMessageQueue<LedData> messageQueue;
     @Autowired
     private MqttService mqttService;
 
@@ -267,5 +271,21 @@ public class DeviceController extends BaseController {
             return renderResult(Global.TRUE, "success");
         }
         return renderResult(Global.FALSE, "failed");
+    }
+
+    /**
+     * 查询指定topic 的最新消息, 用来获取设备的实时状态
+     *
+     * @param topic
+     * @return
+     */
+    @RequiresPermissions("device:device:view")
+    @RequestMapping(value = "queryMessage")
+    @ResponseBody
+    public LedData queryMessage(String topic) {
+        LedData ledData = messageQueue.queryFirst(topic);
+        logger.info("query topic: {} with data: {}", topic, ledData);
+        logger.debug("queue: {}", messageQueue.queryFirst(topic));
+        return ledData;
     }
 }

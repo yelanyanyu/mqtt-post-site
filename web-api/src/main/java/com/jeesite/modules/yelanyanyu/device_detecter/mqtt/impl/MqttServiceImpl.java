@@ -1,11 +1,16 @@
 package com.jeesite.modules.yelanyanyu.device_detecter.mqtt.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.jeesite.common.mapper.JsonMapper;
+import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.LedData;
+import com.jeesite.modules.yelanyanyu.device_detecter.message.MqttMessageQueue;
 import com.jeesite.modules.yelanyanyu.device_detecter.mqtt.MqttService;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author yelanyanyu@zjxu.edu.cn
@@ -14,6 +19,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class MqttServiceImpl implements MqttService, MqttCallback {
+    @Resource
+    private MqttMessageQueue<LedData> messageQueue;
     private final MqttClient mqttClient;
 
     @Autowired
@@ -58,11 +65,10 @@ public class MqttServiceImpl implements MqttService, MqttCallback {
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-        log.info("topic: {}", s);
         String payload = new String(mqttMessage.getPayload());
-        log.info("payload: {}", payload);
         String json = JsonMapper.toJson(payload);
-        log.info("payload-json: {}", json);
+        log.info("topic: {}, payload-json: {}", s, json);
+        messageQueue.put(s, JsonMapper.fromJson(JSON.parse(json).toString(), LedData.class));
     }
 
     @Override
