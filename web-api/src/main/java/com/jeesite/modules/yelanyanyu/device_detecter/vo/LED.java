@@ -1,4 +1,4 @@
-package com.jeesite.modules.yelanyanyu.device_detecter.device.entity;
+package com.jeesite.modules.yelanyanyu.device_detecter.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LedData {
-    private String lux;
-    private String temperature;
+public class LED {
+    private Integer ledcmd;
 }

@@ -10,13 +10,13 @@
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
 
-    <artifactId>jeesite-web-api</artifactId>
+    <artifactId>zjxu-iot-site</artifactId>
     <packaging>war</packaging>
 
     <description>专为分离端提供接口服务，关闭内置登录页和主框架页视图</description>
 
-    <name>JeeSite Web Api</name>
-    <url>http://jeesite.com</url>
+    <name>zjxu-iot-site</name>
+    <url>http://blog.yelanyanyu.com</url>
     <inceptionYear>2013-Now</inceptionYear>
 
     <properties>
@@ -55,7 +55,7 @@
         <!-- 移动端模块 -->
         <dependency>
             <groupId>com.jeesite</groupId>
-            <artifactId>jeesite-module-app</artifactId>
+            <artifactId>iot-module-app</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 

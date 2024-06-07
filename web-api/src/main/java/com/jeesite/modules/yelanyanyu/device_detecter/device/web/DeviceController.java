@@ -4,6 +4,7 @@ import com.jeesite.common.collect.ListUtils;
 import com.jeesite.common.collect.MapUtils;
 import com.jeesite.common.config.Global;
 import com.jeesite.common.lang.StringUtils;
+import com.jeesite.common.mapper.JsonMapper;
 import com.jeesite.common.web.BaseController;
 import com.jeesite.modules.sys.utils.UserUtils;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.Device;
@@ -11,7 +12,9 @@ import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.LedData;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.service.DeviceService;
 import com.jeesite.modules.yelanyanyu.device_detecter.message.MqttMessageQueue;
 import com.jeesite.modules.yelanyanyu.device_detecter.mqtt.MqttService;
+import com.jeesite.modules.yelanyanyu.device_detecter.vo.Fan;
 import com.jeesite.modules.yelanyanyu.device_detecter.vo.FanVO;
+import com.jeesite.modules.yelanyanyu.device_detecter.vo.LED;
 import com.jeesite.modules.yelanyanyu.device_detecter.vo.LEDVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -245,7 +248,7 @@ public class DeviceController extends BaseController {
     @ResponseBody
     public String openLightForLED(LEDVO ledvo) {
         logger.info("command: {}", ledvo);
-        if (mqttService.sendMessage(ledvo.getTopic(), ledvo.getLedcmd().toString())) {
+        if (mqttService.sendMessage(ledvo.getTopic(), JsonMapper.toJson(new LED(ledvo.getLedcmd())))) {
             return renderResult(Global.TRUE, "成功");
         }
         return renderResult(Global.FALSE, "失败");
@@ -256,7 +259,7 @@ public class DeviceController extends BaseController {
     @ResponseBody
     public String closeLightForLED(LEDVO ledvo) {
         logger.info("command: {}", ledvo);
-        if (mqttService.sendMessage(ledvo.getTopic(), ledvo.getLedcmd().toString())) {
+        if (mqttService.sendMessage(ledvo.getTopic(), JsonMapper.toJson(new LED(ledvo.getLedcmd())))) {
             return renderResult(Global.TRUE, "成功");
         }
         return renderResult(Global.FALSE, "失败");
@@ -294,7 +297,7 @@ public class DeviceController extends BaseController {
     @ResponseBody
     public String openFan(FanVO fanVO) {
         logger.info("command: {}", fanVO);
-        if (mqttService.sendMessage(fanVO.getTopic(), fanVO.getFan().toString())) {
+        if (mqttService.sendMessage(fanVO.getTopic(), JsonMapper.toJson(new Fan(fanVO.getFan())))) {
             return renderResult(Global.TRUE, "成功");
         }
         return renderResult(Global.FALSE, "失败");
@@ -305,7 +308,7 @@ public class DeviceController extends BaseController {
     @ResponseBody
     public String closeFan(FanVO fanVO) {
         logger.info("command: {}", fanVO);
-        if (mqttService.sendMessage(fanVO.getTopic(), fanVO.getFan().toString())) {
+        if (mqttService.sendMessage(fanVO.getTopic(), JsonMapper.toJson(new Fan(fanVO.getFan())))) {
             return renderResult(Global.TRUE, "成功");
         }
         return renderResult(Global.FALSE, "失败");
