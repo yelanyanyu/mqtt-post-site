@@ -11,6 +11,7 @@ import com.jeesite.modules.yelanyanyu.device_detecter.device.entity.LedData;
 import com.jeesite.modules.yelanyanyu.device_detecter.device.service.DeviceService;
 import com.jeesite.modules.yelanyanyu.device_detecter.message.MqttMessageQueue;
 import com.jeesite.modules.yelanyanyu.device_detecter.mqtt.MqttService;
+import com.jeesite.modules.yelanyanyu.device_detecter.vo.FanVO;
 import com.jeesite.modules.yelanyanyu.device_detecter.vo.LEDVO;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -287,5 +288,26 @@ public class DeviceController extends BaseController {
         logger.info("query topic: {} with data: {}", topic, ledData);
         logger.debug("queue: {}", messageQueue.queryFirst(topic));
         return ledData;
+    }
+    @RequiresPermissions("device:device:edit")
+    @RequestMapping(value = "openFan")
+    @ResponseBody
+    public String openFan(FanVO fanVO) {
+        logger.info("command: {}", fanVO);
+        if (mqttService.sendMessage(fanVO.getTopic(), fanVO.getFan().toString())) {
+            return renderResult(Global.TRUE, "成功");
+        }
+        return renderResult(Global.FALSE, "失败");
+    }
+
+    @RequiresPermissions("device:device:edit")
+    @RequestMapping(value = "closeFan")
+    @ResponseBody
+    public String closeFan(FanVO fanVO) {
+        logger.info("command: {}", fanVO);
+        if (mqttService.sendMessage(fanVO.getTopic(), fanVO.getFan().toString())) {
+            return renderResult(Global.TRUE, "成功");
+        }
+        return renderResult(Global.FALSE, "失败");
     }
 }
