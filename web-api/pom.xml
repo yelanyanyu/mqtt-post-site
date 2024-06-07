@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>com.jeesite</groupId>
-        <artifactId>jeesite-parent</artifactId>
+        <artifactId>iot-parent</artifactId>
         <version>5.7.0-SNAPSHOT</version>
         <relativePath>../parent/pom.xml</relativePath>
     </parent>
@@ -34,7 +34,7 @@
         <!-- 核心模块 -->
         <dependency>
             <groupId>com.jeesite</groupId>
-            <artifactId>jeesite-module-core</artifactId>
+            <artifactId>iot-module-core</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
@@ -48,7 +48,7 @@
         <!-- 内容管理模块 -->
         <dependency>
             <groupId>com.jeesite</groupId>
-            <artifactId>jeesite-module-cms</artifactId>
+            <artifactId>iot-module-cms</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
 
